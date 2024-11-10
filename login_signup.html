@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login/Signup</title>
+    <style>
+        /* General Styling */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #4b6cb7, #182848);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            color: #fff;
+        }
+
+        .container {
+            background-color: rgba(255, 255, 255, 0.1);
+            padding: 20px;
+            border-radius: 10px;
+            width: 350px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+            text-align: center;
+        }
+
+        h2 {
+            margin-bottom: 15px;
+            font-weight: 600;
+            color: #ffffffbb;
+        }
+
+        input[type="text"], input[type="password"] {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: none;
+            border-radius: 5px;
+            background: rgba(255, 255, 255, 0.2);
+            color: #fff;
+            font-size: 16px;
+            outline: none;
+        }
+
+        input[type="text"]::placeholder, input[type="password"]::placeholder {
+            color: #ffffff88;
+        }
+
+        button {
+            width: 100%;
+            padding: 12px;
+            background: linear-gradient(45deg, #4b6cb7, #182848);
+            border: none;
+            border-radius: 5px;
+            color: #fff;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background 0.3s ease;
+            margin-top: 10px;
+        }
+
+        button:hover {
+            background: linear-gradient(45deg, #182848, #4b6cb7);
+        }
+
+        .message, .error {
+            margin-top: 10px;
+            font-size: 14px;
+            text-align: center;
+        }
+
+        .message {
+            color: #4caf50;
+        }
+
+        .error {
+            color: #f44336;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Login</h2>
+        <input type="text" id="loginUsername" placeholder="Username" required>
+        <input type="password" id="loginPassword" placeholder="Password" required>
+        <button onclick="login()">Login</button>
+        <p class="error" id="loginError"></p>
+        
+        <h2>Signup</h2>
+        <input type="text" id="signupUsername" placeholder="Username" required>
+        <input type="password" id="signupPassword" placeholder="Password" required>
+        <button onclick="signup()">Signup</button>
+        <p class="message" id="signupMessage"></p>
+    </div>
+
+    <script>
+        function signup() {
+            const username = document.getElementById('signupUsername').value;
+            const password = document.getElementById('signupPassword').value;
+
+            if (localStorage.getItem(username)) {
+                document.getElementById('signupMessage').textContent = '';
+                document.getElementById('loginError').textContent = 'Username already exists!';
+                return;
+            }
+
+            localStorage.setItem(username, password);
+            document.getElementById('signupMessage').textContent = 'Signup successful! You can now log in.';
+            document.getElementById('loginError').textContent = '';
+        }
+
+        function login() {
+            const username = document.getElementById('loginUsername').value;
+            const password = document.getElementById('loginPassword').value;
+            const storedPassword = localStorage.getItem(username);
+
+            if (storedPassword === password) {
+                document.getElementById('loginError').textContent = '';
+                alert('Login successful!');
+                // Redirect or show content here
+            } else {
+                document.getElementById('loginError').textContent = 'Incorrect username or password.';
+            }
+        }
+    </script>
+</body>
+</html>
